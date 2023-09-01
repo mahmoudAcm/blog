@@ -3,9 +3,29 @@
 import { Box, Heading, Text } from '@chakra-ui/react';
 import Image from 'next/image';
 import { ExternalLinkIcon } from '@/src/icons/ExternalLinkIcon';
+import { Post as PostProps } from '@/src/types';
+import chakraStyled from '@/src/utils/styles';
+import { useRouter } from 'next/navigation';
 
-export default function Post() {
+const StyledExternalLinkIcon = chakraStyled(ExternalLinkIcon)(({ mode }) => ({
+  cursor: 'pointer',
+  transition: 'transform 250ms',
+  _hover: {
+    transform: 'translate(5px, -5px)'
+  },
+  css: {
+    '& path': {
+      stroke: mode === 'DARK' ? 'white' : undefined
+    }
+  }
+}));
+
+export default function Post(props: PostProps) {
+  const router = useRouter();
   const createdAt = new Date();
+
+  const user = props.users?.find(user => user.id === props.userId);
+
   return (
     <Box display='grid' gap='12px'>
       <Image
@@ -16,7 +36,7 @@ export default function Post() {
         style={{ borderRadius: 2, width: '100%' }}
       />
       <Heading color='hsl(258, 54%, 52%)' fontSize={14 / 16 + 'rem'} fontWeight={600} lineHeight={20 / 14} mt='20px'>
-        Alec Whitten •{' '}
+        {user?.name} •{' '}
         {createdAt.toLocaleDateString('en', {
           day: 'numeric',
           month: 'long',
@@ -25,12 +45,19 @@ export default function Post() {
       </Heading>
       <Box display='flex' justifyContent='space-between'>
         <Heading fontSize={24 / 16 + 'rem'} fontWeight={600} lineHeight={32 / 24}>
-          Bill Walsh leadership lessons
+          {props.title}
         </Heading>
-        <ExternalLinkIcon mt='4px' />
+
+        <span
+          onClick={() => {
+            router.push('/posts/' + props.id);
+          }}
+        >
+          <StyledExternalLinkIcon mt='4px' />
+        </span>
       </Box>
       <Text fontSize='1rem' lineHeight={24 / 16} color='hsl(220, 13%, 46%)'>
-        Like to know the secrets of transforming a 2-14 team into a 3x Super Bowl winning Dynasty?
+        {props.body}
       </Text>
     </Box>
   );

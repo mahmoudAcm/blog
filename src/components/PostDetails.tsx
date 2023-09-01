@@ -3,9 +3,10 @@
 import { useQuery } from '@tanstack/react-query';
 import { Box, Heading, Text } from '@chakra-ui/react';
 import Image from 'next/image';
-import Comment from '@/src/components/Comment';
+import CommentItem from '@/src/components/Comment';
 import { useParams } from 'next/navigation';
 import chakraStyled from '@/src/utils/styles';
+import { Post, Comment, User } from '@/src/types';
 
 const StyledHeading = chakraStyled(Heading)(({ mode }) => ({
   fontSize: 24 / 16 + 'rem',
@@ -14,17 +15,26 @@ const StyledHeading = chakraStyled(Heading)(({ mode }) => ({
   color: mode === 'DARK' ? 'black' : undefined
 }));
 
-export default function PostDetails() {
+export default function PostDetails({ users }: { users: User[] }) {
+  const createdAt = new Date();
   const { id } = useParams();
   const { data: details } = useQuery({
     queryKey: ['post-' + id],
-    queryFn: async () => {}
+    queryFn: async () => {
+      const resp = await fetch('https://jsonplaceholder.typicode.com/posts/' + id);
+      return (await resp.json()) as Post;
+    }
   });
 
   const { data: comments } = useQuery({
     queryKey: ['comments-' + id],
-    queryFn: async () => {}
+    queryFn: async () => {
+      const resp = await fetch('https://jsonplaceholder.typicode.com/posts/' + id + '/comments');
+      return (await resp.json()) as Comment[];
+    }
   });
+
+  const user = users?.find(user => user.id === details?.userId);
 
   return (
     <Box display='grid' gap='32px' gridRow={{ base: 1, lg: 2 }}>
@@ -34,10 +44,15 @@ export default function PostDetails() {
         lineHeight={20 / 14}
         color='hsl(258, 54%, 52%)'
       >
-        Sunday, 1 Jan 2023
+        {user?.name} •{' '}
+        {createdAt.toLocaleDateString('en', {
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric'
+        })}
       </Heading>
       <Heading fontSize={36 / 16 + 'rem'} fontWeight={700} lineHeight={32 / 36}>
-        Grid system for better Design User Interface
+        {details?.title}
       </Heading>
       <Image
         src='/postDetailsImage.svg'
@@ -46,19 +61,17 @@ export default function PostDetails() {
         height={426}
         style={{ borderRadius: 2, width: '100%' }}
       />
-      <Text>
-        Even more importantly, the grid is not a throw-away concept. It is used by both designers and developers alike.
-        Be sure to communicate with your developers the grid structure used when creating the design, so they can
-        implement it accordingly.
-      </Text>
-      <Box bg='hsl(200, 27%, 98%)' py={{ base: '16px', lg: '62px' }} px={{ base: '18px', lg: '64px' }}>
-        <StyledHeading>9 Comments</StyledHeading>
-        <Box display='grid' gap='16px' mt='32px'>
-          <Comment />
-          <Comment />
-          <Comment />
+      <Text>{details?.body}</Text>
+      {comments?.length ? (
+        <Box bg='hsl(200, 27%, 98%)' py={{ base: '16px', lg: '62px' }} px={{ base: '18px', lg: '64px' }}>
+          <StyledHeading>{comments?.length} Comments</StyledHeading>
+          <Box display='grid' gap='16px' mt='32px'>
+            {comments?.map(comment => <CommentItem key={comment.id} {...comment} />)}
+          </Box>
         </Box>
-      </Box>
+      ) : (
+        <></>
+      )}
     </Box>
   );
 }

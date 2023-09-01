@@ -3,4 +3,4 @@ export const THEMES = {
   DARK: 'DARK'
 } as const;
 
-export const POST_PER_PAGE = 4;
+export const POST_PER_PAGE = 6;
