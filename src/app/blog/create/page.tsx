@@ -55,7 +55,7 @@ export default function CreateBlog() {
       console.log(values);
       actions.resetForm();
       toast({
-        title: 'Blog post was successfully created.',
+        title: 'Blog posts was successfully created.',
         status: 'success'
       });
     } catch (error) {
