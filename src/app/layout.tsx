@@ -4,6 +4,7 @@ import { ReactNode } from 'react';
 import { CustomThemeProvider } from '@/src/contexts/CustomThemeContext';
 import Header from '@/src/components/Header';
 import Footer from '@/src/components/Footer';
+import QueryClientProvider from '@/src/components/QueryClientProvider';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -14,11 +15,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang='en'>
       <body>
-        <CustomThemeProvider>
-          <Header />
-          <main>{children}</main>
-          <Footer />
-        </CustomThemeProvider>
+        <QueryClientProvider>
+          <CustomThemeProvider>
+            <Header />
+            <main>{children}</main>
+            <Footer />
+          </CustomThemeProvider>
+        </QueryClientProvider>
       </body>
     </html>
   );

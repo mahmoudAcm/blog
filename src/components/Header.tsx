@@ -42,7 +42,7 @@ export default function Header() {
           <Nav alignItems='center'>
             <Box as='ul' display='flex' gap={30} fontWeight={400} listStyleType='none'>
               <Item>
-                <Link as={NextLink} href='/blog'>
+                <Link as={NextLink} href='/Blog'>
                   Blog
                 </Link>
               </Item>
