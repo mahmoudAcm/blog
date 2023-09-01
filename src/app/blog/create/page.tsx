@@ -14,11 +14,10 @@ import {
   useToast
 } from '@chakra-ui/react';
 import chakraStyled from '@/src/utils/styles';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { User } from '@/src/types';
 import * as yup from 'yup';
 import { Formik, FormikHelpers } from 'formik';
-import $sleep from '@/src/utils/$sleep';
 
 const StyledLabel = chakraStyled(FormLabel)(() => ({
   fontSize: 18 / 16 + 'rem',
@@ -33,6 +32,7 @@ const schema = yup.object({
 });
 
 export default function CreateBlog() {
+  const queryClient = useQueryClient();
   const { data: users } = useQuery({
     queryKey: ['users'],
     queryFn: async () => {
@@ -40,6 +40,24 @@ export default function CreateBlog() {
       return (await resp.json()) as Promise<User[]>;
     }
   });
+
+  const addPost = async (newData: { title: string; body: string; userId: string }) => {
+    const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
+      method: 'POST',
+      body: JSON.stringify(newData)
+      // other fetch options
+    });
+
+    if (!response.ok) {
+      throw new Error('Mutation failed');
+    }
+
+    await queryClient.invalidateQueries(['posts']);
+
+    return response.json();
+  };
+
+  const { mutate } = useMutation(addPost);
 
   const toast = useToast();
 
@@ -51,8 +69,15 @@ export default function CreateBlog() {
   ) {
     try {
       actions.setSubmitting(true);
-      await $sleep(1500);
-      console.log(values);
+
+      const updatedData = await mutate({
+        userId: values.author,
+        title: values.title,
+        body: values.content
+      });
+
+      console.log(updatedData);
+
       actions.resetForm();
       toast({
         title: 'Blog posts was successfully created.',
