@@ -1,12 +1,13 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { Box, Heading, Text } from '@chakra-ui/react';
+import { Box, CircularProgress, Heading, Text } from '@chakra-ui/react';
 import Image from 'next/image';
 import CommentItem from '@/src/components/Comment';
 import { useParams } from 'next/navigation';
 import chakraStyled from '@/src/utils/styles';
 import { Post, Comment, User } from '@/src/types';
+import $sleep from '@/src/utils/$sleep';
 
 const StyledHeading = chakraStyled(Heading)(({ mode }) => ({
   fontSize: 24 / 16 + 'rem',
@@ -18,21 +19,30 @@ const StyledHeading = chakraStyled(Heading)(({ mode }) => ({
 export default function PostDetails({ users }: { users: User[] }) {
   const createdAt = new Date();
   const { id } = useParams();
-  const { data: details } = useQuery({
+  const { data: details, isLoading: isPostLoading } = useQuery({
     queryKey: ['post-' + id],
     queryFn: async () => {
+      await $sleep(500);
       const resp = await fetch('https://jsonplaceholder.typicode.com/posts/' + id);
       return (await resp.json()) as Post;
     }
   });
 
-  const { data: comments } = useQuery({
+  const { data: comments, isLoading: isCommentsLoading } = useQuery({
     queryKey: ['comments-' + id],
     queryFn: async () => {
       const resp = await fetch('https://jsonplaceholder.typicode.com/posts/' + id + '/comments');
       return (await resp.json()) as Comment[];
     }
   });
+
+  if (isPostLoading) {
+    return (
+      <Box display='grid' gap='32px' gridRow={{ base: 1, lg: 2 }} placeItems='center' w='100%'>
+        <CircularProgress isIndeterminate />
+      </Box>
+    );
+  }
 
   const user = users?.find(user => user.id === details?.userId);
 
@@ -62,16 +72,20 @@ export default function PostDetails({ users }: { users: User[] }) {
         style={{ borderRadius: 2, maxWidth: '100%' }}
       />
       <Text>{details?.body}</Text>
-      {comments?.length ? (
-        <Box bg='hsl(200, 27%, 98%)' py={{ base: '16px', lg: '62px' }} px={{ base: '18px', lg: '64px' }}>
-          <StyledHeading>{comments?.length} Comments</StyledHeading>
-          <Box display='grid' gap='16px' mt='32px'>
-            {comments?.map(comment => <CommentItem key={comment.id} {...comment} />)}
+      <Box bg='hsl(200, 27%, 98%)' py={{ base: '16px', lg: '62px' }} px={{ base: '18px', lg: '64px' }}>
+        {comments?.length && !isCommentsLoading ? (
+          <>
+            <StyledHeading>{comments?.length} Comments</StyledHeading>
+            <Box display='grid' gap='16px' mt='32px'>
+              {comments?.map(comment => <CommentItem key={comment.id} {...comment} />)}
+            </Box>
+          </>
+        ) : (
+          <Box display='flex' justifyContent='center'>
+            <CircularProgress isIndeterminate />
           </Box>
-        </Box>
-      ) : (
-        <></>
-      )}
+        )}
+      </Box>
     </Box>
   );
 }
