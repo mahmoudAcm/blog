@@ -70,6 +70,7 @@ export default function PostDetails({ users }: { users: User[] }) {
         width={778}
         height={426}
         style={{ borderRadius: 2, maxWidth: '100%' }}
+        priority
       />
       <Text>{details?.body}</Text>
       <Box bg='hsl(200, 27%, 98%)' py={{ base: '16px', lg: '62px' }} px={{ base: '18px', lg: '64px' }}>

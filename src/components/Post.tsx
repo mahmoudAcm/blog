@@ -33,7 +33,11 @@ export default function Post(props: PostProps) {
         alt='post image'
         width={384}
         height={240}
-        style={{ borderRadius: 2, width: '100%' }}
+        style={{ borderRadius: 2, width: '100%', cursor: 'pointer' }}
+        onClick={() => {
+          router.push('/posts/' + props.id);
+        }}
+        priority
       />
       <Heading color='hsl(258, 54%, 52%)' fontSize={14 / 16 + 'rem'} fontWeight={600} lineHeight={20 / 14} mt='20px'>
         {user?.name} •{' '}
