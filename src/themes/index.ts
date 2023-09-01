@@ -1,6 +1,6 @@
 import { THEMES } from '@/src/constants';
 import { Inter } from 'next/font/google';
-import { extendTheme, ThemeOverride } from '@chakra-ui/react';
+import { defineStyleConfig, extendTheme, ThemeOverride } from '@chakra-ui/react';
 
 const interFont = Inter({
   weight: ['400', '500', '600', '800', '900'],
@@ -8,6 +8,42 @@ const interFont = Inter({
   display: 'swap'
 });
 
+const Button = defineStyleConfig({
+  defaultProps: {
+    variant: 'default'
+  },
+  variants: {
+    default: {
+      fontSize: '1rem',
+      fontWeight: 500,
+      height: 'auto',
+      lineHeight: 24 / 16,
+      padding: '12px 20px',
+      rounded: '8px',
+      border: '1px solid currentColor',
+      _disabled: {
+        _hover: {
+          background: 'currentColor'
+        }
+      }
+    },
+    contained: {
+      fontSize: '1rem',
+      fontWeight: 500,
+      height: 'auto',
+      lineHeight: 24 / 16,
+      padding: '12px 20px',
+      bg: 'hsl(259, 63%, 59%)',
+      color: 'white',
+      rounded: '8px',
+      _disabled: {
+        _hover: {
+          background: 'hsl(259, 63%, 59%) !important'
+        }
+      }
+    }
+  }
+});
 const baseOptions: ThemeOverride = {
   fonts: {
     heading: interFont.style.fontFamily,
@@ -19,6 +55,9 @@ const baseOptions: ThemeOverride = {
     md: '834px',
     lg: '1200px',
     xl: '1536px'
+  },
+  components: {
+    Button
   }
 };
 

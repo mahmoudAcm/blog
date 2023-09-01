@@ -15,7 +15,7 @@ export default function ThemeSwitcher() {
       rounded='29px'
       bg={mode === 'DARK' ? 'white' : '#090D1F'}
       w='96px'
-      ml='20px'
+      cursor='pointer'
       _after={{
         content: '" "',
         position: 'absolute',
@@ -27,12 +27,13 @@ export default function ThemeSwitcher() {
         transform: mode == 'DARK' ? 'translateX(0px)' : 'translateX(calc(16px + 24px))'
       }}
       tabIndex={0}
+      onClick={toggleTheme}
       onKeyDown={evt => {
         if (evt.key === 'Enter') toggleTheme();
       }}
     >
-      <SunIcon cursor='pointer' onClick={toggleTheme} />
-      <MoonIcon cursor='pointer' onClick={toggleTheme} />
+      <SunIcon onClick={toggleTheme} />
+      <MoonIcon onClick={toggleTheme} />
     </Box>
   );
 }

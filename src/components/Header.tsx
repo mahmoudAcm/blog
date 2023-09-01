@@ -1,7 +1,7 @@
 'use client';
 
 import NextLink from 'next/link';
-import { Box, Container, Heading, IconButton, Link } from '@chakra-ui/react';
+import { Box, Button, Container, Heading, IconButton, Link } from '@chakra-ui/react';
 import ThemeSwitcher from '@/src/components/ThemeSwitcher';
 import chakraStyled from '@/src/utils/styles';
 import { MenuIcon } from '@/src/icons/MenuIcon';
@@ -62,7 +62,12 @@ export default function Header() {
                 </Link>
               </Item>
             </Box>
-            <ThemeSwitcher />
+            <Box display='flex' gap='20px' ml='20px' alignItems='center'>
+              <Button variant='contained' as={NextLink} href='/blog/create'>
+                New blog
+              </Button>
+              <ThemeSwitcher />
+            </Box>
           </Nav>
           <IconButton display={{ md: 'none' }} aria-label='Main menu' icon={<MenuIcon />} />
         </Box>
