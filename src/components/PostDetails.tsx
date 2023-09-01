@@ -37,7 +37,7 @@ export default function PostDetails({ users }: { users: User[] }) {
   const user = users?.find(user => user.id === details?.userId);
 
   return (
-    <Box display='grid' gap='32px' gridRow={{ base: 1, lg: 2 }}>
+    <Box display='grid' gap='32px' gridRow={{ base: 1, lg: 2 }} w='100%'>
       <Heading
         fontSize='clamp(0.75rem, 0.321rem + 2.143vw, 2.25rem)'
         fontWeight={600}
@@ -51,7 +51,7 @@ export default function PostDetails({ users }: { users: User[] }) {
           year: 'numeric'
         })}
       </Heading>
-      <Heading fontSize={36 / 16 + 'rem'} fontWeight={700} lineHeight={32 / 36}>
+      <Heading fontSize='clamp(1.188rem, 0.884rem + 1.518vw, 2.25rem)' fontWeight={700} lineHeight={32 / 36}>
         {details?.title}
       </Heading>
       <Image
@@ -59,7 +59,7 @@ export default function PostDetails({ users }: { users: User[] }) {
         alt='post image'
         width={778}
         height={426}
-        style={{ borderRadius: 2, width: '100%' }}
+        style={{ borderRadius: 2, maxWidth: '100%' }}
       />
       <Text>{details?.body}</Text>
       {comments?.length ? (

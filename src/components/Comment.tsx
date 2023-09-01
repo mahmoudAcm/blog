@@ -5,7 +5,7 @@ import chakraStyled from '@/src/utils/styles';
 import { Comment as CommentProps } from '@/src/types';
 
 const StyledText = chakraStyled(Text)(({ mode }) => ({
-  fontSize: 24 / 16 + 'rem',
+  fontSize: 'clamp(0.938rem, 0.777rem + 0.804vw, 1.5rem)',
   fontWeight: 600,
   lineHeight: 32 / 24,
   color: mode === 'DARK' ? 'black' : undefined
@@ -22,7 +22,7 @@ export default function Comment(props: CommentProps) {
             @Rowling
           </StyledText>
         </Heading>
-        <Text fontSize='16px' color='hsl(221, 13%, 46%)' mt='8px'>
+        <Text fontSize='clamp(0.813rem, 0.759rem + 0.268vw, 1rem)' color='hsl(221, 13%, 46%)' mt='8px'>
           {props.body}
         </Text>
       </Box>

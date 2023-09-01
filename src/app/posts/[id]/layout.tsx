@@ -10,7 +10,6 @@ export default function PostDetailsLayout({ children }: { children: ReactNode })
         display='grid'
         gridTemplateColumns={{ lg: '342px 1fr' }}
         gridTemplateRows={{ base: 'auto 1fr', lg: '1fr' }}
-        flexDirection='row-reverse'
         mt={{ base: '20px', lg: '52px' }}
         gap='32px'
         alignItems='flex-start'

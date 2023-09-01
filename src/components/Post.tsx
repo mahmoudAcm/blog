@@ -44,7 +44,7 @@ export default function Post(props: PostProps) {
         })}
       </Heading>
       <Box display='flex' justifyContent='space-between'>
-        <Heading fontSize={24 / 16 + 'rem'} fontWeight={600} lineHeight={32 / 24}>
+        <Heading fontSize='clamp(1.188rem, 1.098rem + 0.446vw, 1.5rem)' fontWeight={600} lineHeight={32 / 24}>
           {props.title}
         </Heading>
 
