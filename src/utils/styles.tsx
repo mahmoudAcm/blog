@@ -1,10 +1,10 @@
-import { Box, BoxProps, ChakraProps } from '@chakra-ui/react';
+import { Box, BoxProps, ChakraProps, HTMLChakraProps } from '@chakra-ui/react';
 import { ReactNode } from 'react';
 import useThemeContext from '@/src/hooks/useThemeContext';
 import { ThemeContextState } from '@/src/contexts/CustomThemeContext';
 
 export default function chakraStyled<
-  Props extends ChakraProps & { children?: ReactNode },
+  Props extends ChakraProps & HTMLChakraProps<any>,
   ComponentType extends BoxProps['as']
 >(Component: ComponentType) {
   return function styles(cb: (theme: ThemeContextState) => Omit<Props, 'children'>) {

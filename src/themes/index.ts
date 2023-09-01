@@ -76,6 +76,9 @@ const themeOptions: Record<keyof typeof THEMES, ThemeOverride> = {
           color: 'hsl(0, 0%, 10%)'
         }
       }
+    },
+    colors: {
+      bg: 'hsl(0, 0%, 100%)'
     }
   },
   [THEMES.DARK]: {
@@ -93,6 +96,9 @@ const themeOptions: Record<keyof typeof THEMES, ThemeOverride> = {
           color: 'white'
         }
       }
+    },
+    colors: {
+      bg: 'hsl(229, 55%, 8%)'
     }
   }
 };
