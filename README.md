@@ -1,34 +1,67 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Project README
 
-## Getting Started
+## Folder Structure
+This project follows a structured folder organization to maintain code organization and readability:
 
-First, run the development server:
 
-```bash
+- `app`: Contains the main application pages.
+- `components`: React components used in the application.
+- `contexts`: React context providers for managing global state.
+- `hooks`: Custom React hooks for reusing logic.
+- `icons`: SVG or image icons used in the app.
+- `themes`: Theme configurations, including default and complex themes.
+- `utils`: Utility functions and helpers.
+- `constants`: Constants and configuration files.
+- `types`: TypeScript type definitions.
+
+## Tech Stack
+- **Next.js**: Utilized for its features, enhancements, and easy development process.
+- **Chakra UI**: Used as the primary styling system.
+- **Custom Utilities**: Created custom utilities similar to Material-UI's styled components to avoid unnecessary component renders based on themes.
+- **Formik With Yup**: Used for form validation.
+
+## Blog Page
+The project includes a blog page, which is statically generated.
+- **Incremental Static Generation (ISG)**: To balance performance and user experience, ISG is implemented with a revalidation period of about every 1 minute. This ensures that the recent posts are updated periodically while not overloading the server with frequent regenerations of less-accessed pages.
+
+## Blog Post Details
+The project includes a blog post details page, which is not statically generated. However, the recent posts component is statically generated. Here's why:
+
+- **Page Usage**: The blog post details page is not frequently accessed by users.
+- **Incremental Static Generation (ISG)**: To balance performance and user experience, ISG is implemented with a revalidation period of about every 1 hour. This ensures that the recent posts are updated periodically while not overloading the server with frequent regenerations of less-accessed pages.
+
+## Create Blog Page
+The project includes a create blog page, which is not statically generated. and applied form validation with the help of formik and yup
+
+## Setting Up and Running the Project
+To set up and run this project, follow these steps:
+
+1. **Clone the Repository**:
+   git clone <repository-url>
+   cd <repository-folder>
+
+2. **Install Dependencies**:
+   npm install
+
+**Start the Development Server**:
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+4. **Access the Application**:
+   The application should now be running locally. Open your web browser and go to `http://localhost:3000` to access it.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+5. **Exploring the Code**:
+- Explore the `src` folder for React components, contexts, hooks, and other application-specific code.
+- Custom utility functions can be found in the `utils` folder.
+- Theme configurations are located in the `themes` folder.
+- Constants and configuration files are in the `constants` folder.
+- TypeScript type definitions are present in the `types` folder.
 
-## Learn More
+## Design Decisions
+- Next.js was chosen for its server-side rendering capabilities, making it suitable for SEO optimization and faster page loads.
+- Chakra UI was selected as the primary styling system for its ease of use and customization options.
+- Custom utilities were created to optimize styling performance and reduce unnecessary re-renders.
+- Incremental Static Generation (ISG) was employed to balance performance and ensure the recent posts are updated at reasonable intervals, considering the page's usage pattern.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Assignment Instructions
+Applied everything mentioned including bonus assignment
