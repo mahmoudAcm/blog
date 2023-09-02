@@ -1,13 +1,14 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { Box, CircularProgress, Heading, Text } from '@chakra-ui/react';
+import { Box, CircularProgress, Heading, Text, useToast } from '@chakra-ui/react';
 import Image from 'next/image';
 import CommentItem from '@/src/components/Comment';
 import { useParams } from 'next/navigation';
 import chakraStyled from '@/src/utils/styles';
 import { Post, Comment, User } from '@/src/types';
 import $sleep from '@/src/utils/$sleep';
+import { useEffect } from 'react';
 
 const StyledHeading = chakraStyled(Heading)(({ mode }) => ({
   fontSize: 24 / 16 + 'rem',
@@ -19,14 +20,20 @@ const StyledHeading = chakraStyled(Heading)(({ mode }) => ({
 export default function PostDetails({ users }: { users: User[] }) {
   const createdAt = new Date();
   const { id } = useParams();
-  const { data: details, isLoading: isPostLoading } = useQuery({
+  const {
+    data: details,
+    isLoading: isPostLoading,
+    error
+  } = useQuery({
     queryKey: ['post-' + id],
     queryFn: async () => {
       await $sleep(500);
       const resp = await fetch('https://jsonplaceholder.typicode.com/posts/' + id);
+      if (!resp.ok) throw 'post was not found';
       return (await resp.json()) as Post;
     }
   });
+  const toast = useToast();
 
   const { data: comments, isLoading: isCommentsLoading } = useQuery({
     queryKey: ['comments-' + id],
@@ -35,6 +42,19 @@ export default function PostDetails({ users }: { users: User[] }) {
       return (await resp.json()) as Comment[];
     }
   });
+
+  useEffect(() => {
+    if (error) {
+      toast({
+        description: 'Post was not found in our records',
+        status: 'error',
+        duration: 60 * 60 * 1000,
+        isClosable: true
+      });
+    }
+  }, [error, toast]);
+
+  if (error) return <></>;
 
   if (isPostLoading) {
     return (
