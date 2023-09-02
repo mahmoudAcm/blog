@@ -57,7 +57,7 @@ export default function CreateBlog() {
     return response.json();
   };
 
-  const { mutate } = useMutation(addPost);
+  const { mutateAsync } = useMutation(addPost);
 
   const toast = useToast();
 
@@ -70,7 +70,7 @@ export default function CreateBlog() {
     try {
       actions.setSubmitting(true);
 
-      const updatedData = await mutate({
+      const updatedData = await mutateAsync({
         userId: values.author,
         title: values.title,
         body: values.content
