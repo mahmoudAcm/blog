@@ -19,7 +19,7 @@ export default function Comment(props: CommentProps) {
         <Heading display='flex' alignItems='center'>
           <StyledText>{props.name}</StyledText>
           <StyledText color='hsl(258, 54%, 52%)' ml='8px'>
-            @Rowling
+            {props.email?.replace(/.*@/, '@') ?? '@Rowling'}
           </StyledText>
         </Heading>
         <Text fontSize='clamp(0.813rem, 0.759rem + 0.268vw, 1rem)' color='hsl(221, 13%, 46%)' mt='8px'>
