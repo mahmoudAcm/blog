@@ -37,8 +37,8 @@ The project includes a create blog page, which is not statically generated. and 
 To set up and run this project, follow these steps:
 
 1. **Clone the Repository**:
-   git clone <repository-url>
-   cd <repository-folder>
+   git clone https://github.com/mahmoudAcm/blog
+   cd blog
 
 2. **Install Dependencies**:
    npm install
