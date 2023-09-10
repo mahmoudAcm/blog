@@ -1,5 +1,8 @@
 # Project README
 
+## IMPORTANT NOTE
+The data provided via the API does not match the data presented in the Figma design.
+
 ## Folder Structure
 This project follows a structured folder organization to maintain code organization and readability:
 
